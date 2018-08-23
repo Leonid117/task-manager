@@ -1,0 +1,10 @@
+.new-card .card-input, .m-tasks__item input[type=text]{
+    width: 100%;
+    padding: .7rem 2.1rem;
+    font-size: 1.4rem;
+    line-height: 1.429;
+    border-radius: 3px;
+    border: 1px solid;
+    border-color: #d3d9dd;
+    margin: 0 0 15px 0;
+}
