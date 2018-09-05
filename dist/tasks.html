@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="keywords" content="">
-    <title>Tasks / Universe Admin</title>
+    <title>Tasks</title>
     <link rel="shortcut icon" href="img/favicon.png">
 
 
@@ -16,7 +16,9 @@
     <link rel="stylesheet" href="vendor/select2/css/select2.min.css">
     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.min.css" id="stylesheet">
+    <link rel="stylesheet" href="css/style-g.css" id="stylesheet">
     <link rel="stylesheet" href="css/new-style.css" id="stylesheet">
+    <!--<link href='css/example.css' rel='stylesheet' type='text/css' />-->
 
 
     <script src="js/ie.assign.fix.min.js"></script>
@@ -26,7 +28,6 @@
 <div class="preloader">
     <div class="loader">
         <span class="loader__indicator"></span>
-        <div class="loader__label"><img src="img/logo.png" alt=""></div>
     </div>
 </div>
 
@@ -37,8 +38,8 @@
         <span class="iconfont iconfont-alert-close sidebar-toggler__close"></span>
     </button>
 
-    <a class="navbar-brand" href="/"><img src="img/logo.png" alt=""/></a>
-    <a class="navbar-brand-sm" href="/"><img src="img/logo-sm.png" alt=""/></a>
+    <a class="navbar-brand" href="/">Task manager</a>
+    <a class="navbar-brand-sm" href="/">Task manager</a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse">
         <span class="iconfont iconfont-navbar-open navbar-toggler__open"></span>
@@ -197,7 +198,7 @@
             <a class="dropdown-toggle navbar-dropdown-toggle navbar-dropdown-toggle__user" data-toggle="dropdown"
                href="#">
                 <img src="img/users/user-3.png" alt="" class="navbar-dropdown-toggle__user-avatar">
-                <span class="navbar-dropdown__user-name">John Smith</span>
+                <span class="navbar-dropdown__user-name">Leonid Volkov</span>
             </a>
             <div class="dropdown-menu navbar-dropdown-menu navbar-dropdown-menu__user">
                 <div class="navbar-dropdown-user-content">
@@ -209,8 +210,7 @@
                             Profile</a><a class="dropdown-info__addaccount" href="#">Add account</a></div>
                     </div>
                 </div>
-                <a class="dropdown-item navbar-dropdown__item" href="#">Upgrade to <span>PRO</span></a><a
-                    class="dropdown-item navbar-dropdown__item" href="#">Invite team member</a><a
+                <a
                     class="dropdown-item navbar-dropdown__item" href="#">Fedback</a><a
                     class="dropdown-item navbar-dropdown__item" href="#">Help</a><a
                     class="dropdown-item navbar-dropdown__item" href="#">Sign Out</a>
@@ -218,6 +218,7 @@
         </div>
     </div>
 </div>
+
 
 
 <div class="page-wrap">
@@ -236,7 +237,7 @@
                     <div class="dropdown sidebar__user-dropdown">
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            Alexander Porter
+                            Leonid Volkov
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="#">Settings</a>
@@ -533,9 +534,6 @@
                                                                 href="account-settings.html">Account Settings</a></li>
                         </ul>
                     </li>
-                    <li class="sidebar-nav__item">
-                        <span class="sidebar-nav__link sidebar-nav__source">1.0.25 Source</span>
-                    </li>
                 </ul>
             </div>
 
@@ -550,27 +548,26 @@
 
     <div class="page-content">
 
-        <div class="container-fluid m-tasks">
+        <div class="container-fluid m-tasks" >
             <h2 class="content-heading">Tasks</h2>
             <div class="main-container m-tasks__container container-heading-bordered">
                 <h2 class="container-heading" ng-controller="cardCtrl as cardCtrl">
                     <span>Tasks ({{cardCtrl.getCards().length}})</span>
-                    <span class="container-heading-controls">
-        <a href="#" class="iconfont iconfont-action-plus container-heading-control"></a>
-      </span>
                 </h2>
                 <div class="container-body m-tasks__columns"
                      id="lists-container"
                      ng-controller="listsCtrl as listsCtrl">
-                    <div class="m-tasks__column m-tasks__column--new"
+                    <div id="{{list.id}}" class="m-tasks__column m-tasks__column--new"
                          ng-repeat="list in listsCtrl.lists"
-                         ng-controller="listCtrl as listCtrl">
+                         ng-controller="listCtrl as listCtrl"
+                         >
                         <div class="m-tasks__column-header">
                             <span class="m-tasks__column-icon iconfont iconfont-task-label"></span>
                             <span class="m-tasks__column-name">{{list.listName}}</span>
                         </div>
 
-                        <button ng-show="$first" class="btn btn-outline-success btn-block iconfont icon-left btn-lg m-tasks__add-card"
+                        <button ng-show="$first"
+                                class="btn btn-outline-success btn-block iconfont icon-left btn-lg m-tasks__add-card"
                                 type="button"
                                 data-toggle="modal" data-target="#exampleModal">
                             Add new card <span class="btn-icon iconfont iconfont-plus"></span>
@@ -594,8 +591,9 @@
                                                        ng-model='listCtrl.cardDescription'
                                                        class='card-input'
                                                        placeholder='cardDescription'>
-                                                <input class="btn btn-primary" type="submit" value="Submit"/>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                                <input class="btn btn-primary" type="submit" value="Submit"  />
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Close
                                                 </button>
                                             </form>
 
@@ -604,10 +602,11 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="m-tasks__items list-group" ng-controller="cardCtrl as cardCtrl"
+                             ng-repeat='card in listCtrl.getCards(list)  track by $index'
 
-                        <div class="m-tasks__items list-group" draggable="true" ng-controller="cardCtrl as cardCtrl"
-                             ng-repeat='card in listCtrl.getCards(list)'>
-                            <div class="m-tasks__item list-group-item">
+                             >
+                            <div id="{{card.id}}" class="m-tasks__item list-group-item" draggable="false" ng-mousedown="setFlag()">
                                 <div class="dropdown no-arrow control-dropdown m-tasks__item-control">
                                     <span class="dropdown-toggle iconfont iconfont-dots" data-toggle="dropdown"></span>
                                     <div class="dropdown-menu">
@@ -617,22 +616,28 @@
                                         <div class="dropdown-text">Set priority:</div>
                                         <div class="dropdown-radios">
                                             <div>
-                                                <label  class="custom-control custom-radio custom-radio-simple custom-radio-simple--danger">
-                                                    <input ng-click='cardCtrl.updateCard(card, "high")'ng-model='cardCtrl.editingCard.priority' value="high" type="radio" class="custom-control-input" name="radio">
+                                                <label class="custom-control custom-radio custom-radio-simple custom-radio-simple--danger">
+                                                    <input ng-click='cardCtrl.updateCard(card, "high")'
+                                                           ng-model='cardCtrl.editingCard.priority' value="high"
+                                                           type="radio" class="custom-control-input" name="radio">
                                                     <span class="custom-control-indicator"></span>
                                                     <span class="custom-control-description">High</span>
                                                 </label>
                                             </div>
                                             <div>
                                                 <label class="custom-control custom-radio custom-radio-simple custom-radio-simple--success">
-                                                    <input ng-click='cardCtrl.updateCard(card, "medium")'ng-model='cardCtrl.editingCard.priority' value="medium" type="radio" class="custom-control-input" name="radio">
+                                                    <input ng-click='cardCtrl.updateCard(card, "medium")'
+                                                           ng-model='cardCtrl.editingCard.priority' value="medium"
+                                                           type="radio" class="custom-control-input" name="radio">
                                                     <span class="custom-control-indicator"></span>
                                                     <span class="custom-control-description">Medium</span>
                                                 </label>
                                             </div>
                                             <div>
                                                 <label class="custom-control custom-radio custom-radio-simple custom-radio-simple--secondary">
-                                                    <input ng-click='cardCtrl.updateCard(card,"normal")'ng-model='cardCtrl.editingCard.priority' value="normal" type="radio" class="custom-control-input" name="radio"
+                                                    <input ng-click='cardCtrl.updateCard(card,"normal")'
+                                                           ng-model='cardCtrl.editingCard.priority' value="normal"
+                                                           type="radio" class="custom-control-input" name="radio"
                                                            checked>
                                                     <span class="custom-control-indicator"></span>
                                                     <span class="custom-control-description">Normal</span>
@@ -646,7 +651,7 @@
                                 <div class="m-tasks__item-desc" ng-if='!cardCtrl.isEditing'>
                                     {{card.description}}
                                 </div>
-                                <span class="m-tasks__item-date">12 April 2018</span>
+                                <span class="m-tasks__item-date"ng-model='listCtrl.cardDate'>{{card.date| date:'yyyy MM dd'}}</span>
                                 <span class="m-tasks__item-priority iconfont iconfont-task-bell m-tasks__item-priority--{{card.priority}}"></span>
                                 <div ng-if='cardCtrl.isEditing'>
                                     <form ng-submit='cardCtrl.updateCard(cardCtrl.editingCard)'>
@@ -670,143 +675,7 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="container-body m-tasks__columns">-->
-                    <!--<div class="m-tasks__column m-tasks__column&#45;&#45;new">-->
-                        <!--<div class="m-tasks__column-header">-->
-                            <!--<span class="m-tasks__column-icon iconfont iconfont-task-label"></span>-->
-                            <!--<span class="m-tasks__column-name">New</span>-->
-                        <!--</div>-->
-
-                        <!--<button class="btn btn-outline-success btn-block iconfont icon-left btn-lg m-tasks__add-card" type="button">-->
-                            <!--Add new card <span class="btn-icon iconfont iconfont-plus"></span>-->
-                        <!--</button>-->
-
-                        <!--<div class="m-tasks__items m-tasks__column&#45;&#45;new list-group">-->
-                            <!--<div class="m-tasks__item list-group-item">-->
-                                <!--<div class="dropdown no-arrow control-dropdown m-tasks__item-control">-->
-                                    <!--<span class="dropdown-toggle iconfont iconfont-dots" data-toggle="dropdown"></span>-->
-                                    <!--<div class="dropdown-menu">-->
-                                        <!--<a class="dropdown-item" href="#">Edit</a>-->
-                                        <!--<a class="dropdown-item" href="#">Delete</a>-->
-                                        <!--<div class="dropdown-text">Set priority:</div>-->
-                                        <!--<div class="dropdown-radios">-->
-                                            <!--<div>-->
-                                                <!--<label class="custom-control custom-radio custom-radio-simple custom-radio-simple&#45;&#45;danger">-->
-                                                    <!--<input type="radio" class="custom-control-input" name="radio">-->
-                                                    <!--<span class="custom-control-indicator"></span>-->
-                                                    <!--<span class="custom-control-description">High</span>-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div>-->
-                                                <!--<label class="custom-control custom-radio custom-radio-simple custom-radio-simple&#45;&#45;success">-->
-                                                    <!--<input type="radio" class="custom-control-input" name="radio">-->
-                                                    <!--<span class="custom-control-indicator"></span>-->
-                                                    <!--<span class="custom-control-description">Medium</span>-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div>-->
-                                                <!--<label class="custom-control custom-radio custom-radio-simple custom-radio-simple&#45;&#45;secondary">-->
-                                                    <!--<input type="radio" class="custom-control-input" name="radio" checked>-->
-                                                    <!--<span class="custom-control-indicator"></span>-->
-                                                    <!--<span class="custom-control-description">Normal</span>-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-
-                                <!--<h6 class="m-tasks__item-name">Office Meeting</h6>-->
-                                <!--<div class="m-tasks__item-desc">-->
-                                    <!--Lorem Ipsum is simply dummy text of the printing and typesetting industry.-->
-                                <!--</div>-->
-                                <!--<span class="m-tasks__item-date">12 April 2018</span>-->
-                                <!--<span class="m-tasks__item-priority iconfont iconfont-task-bell m-tasks__item-priority&#45;&#45;normal"></span>-->
-                            <!--</div>-->
-                            <!--<div class="m-tasks__item list-group-item">-->
-                                <!--<div class="dropdown no-arrow control-dropdown m-tasks__item-control">-->
-                                    <!--<span class="dropdown-toggle iconfont iconfont-dots" data-toggle="dropdown"></span>-->
-                                    <!--<div class="dropdown-menu">-->
-                                        <!--<a class="dropdown-item" href="#">Edit</a>-->
-                                        <!--<a class="dropdown-item" href="#">Delete</a>-->
-                                        <!--<div class="dropdown-text">Set priority:</div>-->
-                                        <!--<div class="dropdown-radios">-->
-                                            <!--<div>-->
-                                                <!--<label class="custom-control custom-radio custom-radio-simple custom-radio-simple&#45;&#45;danger">-->
-                                                    <!--<input type="radio" class="custom-control-input" name="radio">-->
-                                                    <!--<span class="custom-control-indicator"></span>-->
-                                                    <!--<span class="custom-control-description">High</span>-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div>-->
-                                                <!--<label class="custom-control custom-radio custom-radio-simple custom-radio-simple&#45;&#45;success">-->
-                                                    <!--<input type="radio" class="custom-control-input" name="radio">-->
-                                                    <!--<span class="custom-control-indicator"></span>-->
-                                                    <!--<span class="custom-control-description">Medium</span>-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div>-->
-                                                <!--<label class="custom-control custom-radio custom-radio-simple custom-radio-simple&#45;&#45;secondary">-->
-                                                    <!--<input type="radio" class="custom-control-input" name="radio" checked>-->
-                                                    <!--<span class="custom-control-indicator"></span>-->
-                                                    <!--<span class="custom-control-description">Normal</span>-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-
-                                <!--<h6 class="m-tasks__item-name">New Sidebar Design</h6>-->
-                                <!--<div class="m-tasks__item-desc">-->
-                                    <!--Lorem Ipsum is simply dummy text of the printing and typesetting industry.-->
-                                <!--</div>-->
-                                <!--<span class="m-tasks__item-date">12 April 2018</span>-->
-                                <!--<span class="m-tasks__item-priority iconfont iconfont-task-bell m-tasks__item-priority&#45;&#45;high"></span>-->
-                            <!--</div>-->
-                            <!--<div class="m-tasks__item list-group-item">-->
-                                <!--<div class="dropdown no-arrow control-dropdown m-tasks__item-control">-->
-                                    <!--<span class="dropdown-toggle iconfont iconfont-dots" data-toggle="dropdown"></span>-->
-                                    <!--<div class="dropdown-menu">-->
-                                        <!--<a class="dropdown-item" href="#">Edit</a>-->
-                                        <!--<a class="dropdown-item" href="#">Delete</a>-->
-                                        <!--<div class="dropdown-text">Set priority:</div>-->
-                                        <!--<div class="dropdown-radios">-->
-                                            <!--<div>-->
-                                                <!--<label class="custom-control custom-radio custom-radio-simple custom-radio-simple&#45;&#45;danger">-->
-                                                    <!--<input type="radio" class="custom-control-input" name="radio">-->
-                                                    <!--<span class="custom-control-indicator"></span>-->
-                                                    <!--<span class="custom-control-description">High</span>-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div>-->
-                                                <!--<label class="custom-control custom-radio custom-radio-simple custom-radio-simple&#45;&#45;success">-->
-                                                    <!--<input type="radio" class="custom-control-input" name="radio">-->
-                                                    <!--<span class="custom-control-indicator"></span>-->
-                                                    <!--<span class="custom-control-description">Medium</span>-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div>-->
-                                                <!--<label class="custom-control custom-radio custom-radio-simple custom-radio-simple&#45;&#45;secondary">-->
-                                                    <!--<input type="radio" class="custom-control-input" name="radio" checked>-->
-                                                    <!--<span class="custom-control-indicator"></span>-->
-                                                    <!--<span class="custom-control-description">Normal</span>-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-
-                                <!--<h6 class="m-tasks__item-name">Slider Animation</h6>-->
-                                <!--<div class="m-tasks__item-desc">-->
-                                    <!--Lorem Ipsum is simply dummy text of the printing and typesetting industry.-->
-                                <!--</div>-->
-                                <!--<span class="m-tasks__item-date">12 April 2018</span>-->
-                                <!--<span class="m-tasks__item-priority iconfont iconfont-task-bell m-tasks__item-priority&#45;&#45;medium"></span>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
             </div>
-
         </div>
 
     </div>
@@ -824,142 +693,31 @@
 <script src="js/main.js"></script>
 
 
-<script src="vendor/sortable/sortable.min.js"></script>
-<script src="js/preview/tasks.min.js"></script>
 
 
 <div class="sidebar-mobile-overlay"></div>
 
 
-<div class="settings-panel">
-    <div class="settings-panel__header">
-        <span class="settings-panel__close iconfont iconfont-modal-close"></span>
 
-        <h5 class="settings-panel__heading">Theme Customizer</h5>
-        <div class="settings-panel__desc">Customize & Preview In Real Time</div>
-    </div>
-    <div class="settings-panel__body">
-        <div class="settings-panel__layout-options">
-            <h6 class="settings-panel__block-heading">Layout Options</h6>
-            <div class="settings-panel__layout-option">
-                <label class="switch-inline">
-          <span class="switch">
-            <input type="checkbox" id="collapse-sidebar">
-              <span class="switch-slider">
-                <span class="switch-slider__on"></span>
-                <span class="switch-slider__off"></span>
-              </span>
-            </span>
-                    <span class="switch-inline__text">Collapsed Sidebar</span>
-                </label>
-            </div>
-            <!--<div class="settings-panel__layout-option">
-              <label class="switch-inline">
-                <span class="switch">
-                  <input type="checkbox" checked>
-                    <span class="switch-slider">
-                      <span class="switch-slider__on"></span>
-                      <span class="switch-slider__off"></span>
-                    </span>
-                  </span>
-                <span class="switch-inline__text">Fixed Sidebar</span>
-              </label>
-            </div>-->
-        </div>
-        <div class="settings-panel__theme-colors">
-            <h6 class="settings-panel__block-heading">Theme Colors</h6>
-
-            <ul class="list-unstyled">
-                <li>
-                    <label class="color-radio js-settings-color">
-                        <input type="radio" name="settings_color" data-style="style-a">
-                        <span class="color-radio__color"></span>
-                        <span class="color-radio__text">#1</span>
-                    </label>
-                </li>
-                <li>
-                    <label class="color-radio js-settings-color">
-                        <input type="radio" name="settings_color" data-style="style-b">
-                        <span class="color-radio__color color-radio__color--deep-cerulean"></span>
-                        <span class="color-radio__text">#2</span>
-                    </label>
-                </li>
-                <li>
-                    <label class="color-radio js-settings-color is-checked">
-                        <input type="radio" name="settings_color" data-style="style" checked>
-                        <span class="color-radio__color color-radio__color--river-bad"></span>
-                        <span class="color-radio__text">#3</span>
-                    </label>
-                </li>
-                <li>
-                    <label class="color-radio js-settings-color">
-                        <input type="radio" name="settings_color" data-style="style-d">
-                        <span class="color-radio__color color-radio__color--sun-juan"></span>
-                        <span class="color-radio__text">#4</span>
-                    </label>
-                </li>
-                <li>
-                    <label class="color-radio js-settings-color">
-                        <input type="radio" name="settings_color" data-style="style-e">
-                        <span class="color-radio__color color-radio__color--bermuda-gray"></span>
-                        <span class="color-radio__text">#5</span>
-                    </label>
-                </li>
-                <li>
-                    <label class="color-radio js-settings-color">
-                        <input type="radio" name="settings_color" data-style="style-f">
-                        <span class="color-radio__color color-radio__color--deep-sea"></span>
-                        <span class="color-radio__text">#6</span>
-                    </label>
-                </li>
-                <li>
-                    <label class="color-radio js-settings-color">
-                        <input type="radio" name="settings_color" data-style="style-i">
-                        <span class="color-radio__color color-radio__color--wine-berry"></span>
-                        <span class="color-radio__text">#7</span>
-                    </label>
-                </li>
-                <li>
-                    <label class="color-radio js-settings-color">
-                        <input type="radio" name="settings_color" data-style="style-g">
-                        <span class="color-radio__color  color-radio__color--big-stone"></span>
-                        <span class="color-radio__text">#8</span>
-                    </label>
-                </li>
-                <li>
-                    <label class="color-radio js-settings-color">
-                        <input type="radio" name="settings_color" data-style="style-j">
-                        <span class="color-radio__color color-radio__color--killarney"></span>
-                        <span class="color-radio__text">#9</span>
-                    </label>
-                </li>
-                <li>
-                    <label class="color-radio js-settings-color">
-                        <input type="radio" name="settings_color" data-style="style-h">
-                        <span class="color-radio__color color-radio__color--kabul"></span>
-                        <span class="color-radio__text">#10</span>
-                    </label>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<span class="settings-panel-control">
   <span class="iconfont iconfont-settings"></span>
 </span>
 
 
-<script src="js/preview/settings-panel.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.js"></script>
 
 <script src="js-ng/app.js"></script>
+
 <script src="js-ng/factories/listFactory.js"></script>
 <script src="js-ng/factories/cardFactory.js"></script>
 <script src="js-ng/controllers/listsCtrl.js"></script>
 <script src="js-ng/controllers/listCtrl.js"></script>
 <script src="js-ng/controllers/cardCtrl.js"></script>
 <script src="js-ng/directives/closeEditing.js"></script>
+<script src="vendor/sortable/sortable.min.js"></script>
+<!--<script src="https://rawgithub.com/gsklee/ngStorage/master/ngStorage.js"></script>-->
+<script src="js/preview/tasks.js"></script>
+
+
 </body>
 </html>

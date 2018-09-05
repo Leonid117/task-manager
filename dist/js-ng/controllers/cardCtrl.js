@@ -5,6 +5,8 @@ angular.module('app').controller('cardCtrl', function (cardFactory) {
 
     this.deleteCard = function (card) {
         cardFactory.deleteCard(card);
+        cards = cardFactory.getCards();
+        localStorage.setItem('qwe', JSON.stringify(cards));
     };
 
     this.getCards = function () {
@@ -13,16 +15,11 @@ angular.module('app').controller('cardCtrl', function (cardFactory) {
     this.editCard = function (card) {
         this.isEditing = true;
         this.editingCard = angular.copy(card);
-        console.log('editingCard=', this.editingCard);
     };
 
-    cardCtrl.updateCard = function (card, priority) {
-        console.log('card=', card);
+    this.updateCard = function (card, priority) {
         cardFactory.updateCard(card, priority);
         cardCtrl.editingCard = null;
         cardCtrl.isEditing = false;
-        console.log('priority=', priority);
-
     };
-
 });

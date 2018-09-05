@@ -8,3 +8,6 @@
     border-color: #d3d9dd;
     margin: 0 0 15px 0;
 }
+.m-tasks__item{
+    margin-bottom: 20px !important;
+}
